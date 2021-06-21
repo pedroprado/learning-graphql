@@ -20,11 +20,13 @@
   "homepage": "https://github.com/pedroprado/learning-graphql#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
     "json-server": "^0.16.3",
     "lodash": "^4.17.21",
+    "mongoose": "^5.12.14",
     "nodemon": "^2.0.7"
   }
 }
