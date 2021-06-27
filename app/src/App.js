@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import SongList from './page/songList/SongList';
+import SongCreate from './page/songCreate/SongCreate';
 
-function App() {
+const apolloClient = new ApolloClient(
+  { 
+    link: new HttpLink({
+      uri: "http://localhost:4000/graphql"
+    }),
+    cache: new InMemoryCache()
+  }
+  );
+
+function App(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={apolloClient}>
+      <BrowserRouter>
+        <div className="container">
+            <Switch>
+                <Route exact path="/" component={SongList}/>
+                <Route path="/song/new" component={SongCreate}/>
+            </Switch>
+        </div>
+        </BrowserRouter>
+    </ApolloProvider>
   );
 }
 
