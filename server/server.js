@@ -3,6 +3,7 @@ const models = require('./models');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { graphqlHTTP } = require('express-graphql');
+const cors = require('cors');
 const schema = require('./schema/schema');
 
 const appPort = 4000;
@@ -27,7 +28,7 @@ mongoose.connection
     .once('open', () => console.log('Connected to MongoLab instance.'))
     .on('error', error => console.log('Error connecting to MongoLab:', error));
 
-app.use(bodyParser.json());
+app.use(cors())
 app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true

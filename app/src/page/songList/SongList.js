@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 
 function SongList(props){
     const {loading, songs} = props.data;
+    console.log(songs)
 
     const generateSongs = (loading, songs) => {
         if(loading || !songs){
