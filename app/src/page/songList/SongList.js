@@ -1,34 +1,44 @@
 import React from 'react'
-import gql from 'graphql-tag'
+import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { listSongs, deleteSong } from '../../query/query';
 
 function SongList(props){
-    const {loading, songs} = props.data;
-    console.log(songs)
+    const {songs, loading, refetch} = props.data;
 
+    const onDeleteSong = id =>{
+        props.mutate({
+            variables: {id: id}})
+            .then( () => refetch()) ;
+    }
+    
     const generateSongs = (loading, songs) => {
         if(loading || !songs){
             return <div></div>;
         }
         return (
-            songs.map(song => <li key={song.id} className="collection-item">{song.title}</li>)
+            songs.map(song => 
+                <div className="collection-item" key={song.id} style={{display:"flex", justifyContent:"space-between"}}>
+                    <li>{song.title}</li>
+                    <DeleteOutlinedIcon onClick={()=> onDeleteSong(song.id)}/>
+                </div>
+            )
         );
     };
 
     return(
-        <ul className="collection">
-            {generateSongs(loading, songs)}
-        </ul>
+        <div>
+            <ul className="collection">
+                {generateSongs(loading, songs)}
+            </ul>
+            <Link to="/songs/new" className="btn-floating  btn-larg red right">
+                <AddIcon className="material-icons"/>
+            </Link>
+        </div>
+     
     );
 }
 
-const query = gql`
-    {
-        songs{
-            id
-            title
-        }
-    }
-`;
-
-export default graphql(query)(SongList);
+export default graphql(listSongs)(graphql(deleteSong)(SongList));
