@@ -6,9 +6,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import SongList from './page/songList/SongList';
 import SongCreate from './page/songCreate/SongCreate';
+import SongDetail from './page/songDetail/SongDetail';
 
 const apolloClient = new ApolloClient(
   { 
+    dataIdFromObject: o => o.id,
     link: new HttpLink({
       uri: "http://localhost:4000/graphql",
     }),
@@ -24,6 +26,7 @@ function App(){
             <Switch>
                 <Route exact path="/" component={SongList}/>
                 <Route path="/songs/new" component={SongCreate}/>
+                <Route path="/songs/:id" component={SongDetail}/>
             </Switch>
         </div>
         </BrowserRouter>

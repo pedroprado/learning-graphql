@@ -21,7 +21,9 @@ function SongList(props){
         return (
             songs.map(song => 
                 <div className="collection-item" key={song.id} style={{display:"flex", justifyContent:"space-between"}}>
-                    <li>{song.title}</li>
+                    <Link to={`/songs/${song.id}`}>
+                        <li>{song.title}</li>
+                    </Link>
                     <DeleteOutlinedIcon onClick={()=> onDeleteSong(song.id)}/>
                 </div>
             )
